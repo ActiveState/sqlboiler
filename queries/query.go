@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/volatiletech/sqlboiler/boil"
-	"github.com/volatiletech/sqlboiler/drivers"
+	"github.com/ActiveState/sqlboiler/boil"
+	"github.com/ActiveState/sqlboiler/drivers"
 )
 
 // joinKind is the type of join

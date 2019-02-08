@@ -10,11 +10,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/volatiletech/sqlboiler/importers"
+	"github.com/ActiveState/sqlboiler/importers"
 
 	"github.com/pkg/errors"
-	"github.com/volatiletech/sqlboiler/drivers"
-	"github.com/volatiletech/sqlboiler/strmangle"
+	"github.com/ActiveState/sqlboiler/drivers"
+	"github.com/ActiveState/sqlboiler/strmangle"
 
 	// Side-effect import sql driver
 	_ "github.com/lib/pq"
@@ -590,8 +590,8 @@ func (p PostgresDriver) Imports() (importers.Collection, error) {
 				`"strings"`,
 			},
 			ThirdParty: importers.List{
-				`"github.com/volatiletech/sqlboiler/strmangle"`,
-				`"github.com/volatiletech/sqlboiler/drivers"`,
+				`"github.com/ActiveState/sqlboiler/strmangle"`,
+				`"github.com/ActiveState/sqlboiler/drivers"`,
 			},
 		},
 	}
@@ -617,8 +617,8 @@ func (p PostgresDriver) Imports() (importers.Collection, error) {
 				`"github.com/kat-co/vala"`,
 				`"github.com/pkg/errors"`,
 				`"github.com/spf13/viper"`,
-				`"github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql/driver"`,
-				`"github.com/volatiletech/sqlboiler/randomize"`,
+				`"github.com/ActiveState/sqlboiler/drivers/sqlboiler-psql/driver"`,
+				`"github.com/ActiveState/sqlboiler/randomize"`,
 				`_ "github.com/lib/pq"`,
 			},
 		},
@@ -679,76 +679,76 @@ func (p PostgresDriver) Imports() (importers.Collection, error) {
 			Standard: importers.List{`"time"`},
 		},
 		"types.JSON": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.Decimal": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.BytesArray": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.Int64Array": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.Float64Array": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.BoolArray": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.StringArray": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.DecimalArray": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"types.Hstore": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"pgeo.Point": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.Line": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.Lseg": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.Box": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.Path": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.Polygon": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"types.NullDecimal": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types"`},
 		},
 		"pgeo.Circle": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.NullPoint": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.NullLine": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.NullLseg": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.NullBox": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.NullPath": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.NullPolygon": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 		"pgeo.NullCircle": {
-			ThirdParty: importers.List{`"github.com/volatiletech/sqlboiler/types/pgeo"`},
+			ThirdParty: importers.List{`"github.com/ActiveState/sqlboiler/types/pgeo"`},
 		},
 	}
 

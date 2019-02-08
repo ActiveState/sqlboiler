@@ -1,7 +1,7 @@
 ![sqlboiler logo](https://i.imgur.com/lMXUTPE.png)
 
-[![License](https://img.shields.io/badge/license-BSD-blue.svg)](https://github.com/volatiletech/sqlboiler/blob/master/LICENSE)
-[![GoDoc](https://godoc.org/github.com/volatiletech/sqlboiler?status.svg)](https://godoc.org/github.com/volatiletech/sqlboiler)
+[![License](https://img.shields.io/badge/license-BSD-blue.svg)](https://github.com/ActiveState/sqlboiler/blob/master/LICENSE)
+[![GoDoc](https://godoc.org/github.com/ActiveState/sqlboiler?status.svg)](https://godoc.org/github.com/ActiveState/sqlboiler)
 [![Mail](https://img.shields.io/badge/mail%20list-sqlboiler-lightgrey.svg)](https://groups.google.com/a/volatile.tech/forum/#!forum/sqlboiler)
 [![Mail-Annc](https://img.shields.io/badge/mail%20list-sqlboiler--announce-lightgrey.svg)](https://groups.google.com/a/volatile.tech/forum/#!forum/sqlboiler-announce)
 [![Slack](https://img.shields.io/badge/slack-%23general-lightgrey.svg)](https://sqlboiler.from-the.cloud)
@@ -128,10 +128,10 @@ Table of Contents
 
 | Database          | Driver Location |
 | ----------------- | --------------- |
-| PostgreSQL        | [https://github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql](drivers/sqlboiler-psql)
-| MySQL             | [https://github.com/volatiletech/sqlboiler/drivers/sqlboiler-mysql](drivers/sqlboiler-mysql)
-| MSSQLServer 2012+ | [https://github.com/volatiletech/sqlboiler/drivers/sqlboiler-mssql](drivers/sqlboiler-mssql)
-| SQLite3           | https://github.com/volatiletech/sqlboiler-sqlite3
+| PostgreSQL        | [https://github.com/ActiveState/sqlboiler/drivers/sqlboiler-psql](drivers/sqlboiler-psql)
+| MySQL             | [https://github.com/ActiveState/sqlboiler/drivers/sqlboiler-mysql](drivers/sqlboiler-mysql)
+| MSSQLServer 2012+ | [https://github.com/ActiveState/sqlboiler/drivers/sqlboiler-mssql](drivers/sqlboiler-mssql)
+| SQLite3           | https://github.com/ActiveState/sqlboiler-sqlite3
 | CockroachDB       | https://github.com/glerchundi/sqlboiler-crdb
 
 **Note:** SQLBoiler supports out of band driver support so you can make your own
@@ -145,7 +145,7 @@ For a comprehensive list of available operations and examples please see [Featur
 ```go
 import (
   // Import this so we don't have to use qm.Limit etc.
-  . "github.com/volatiletech/sqlboiler/queries/qm"
+  . "github.com/ActiveState/sqlboiler/queries/qm"
 )
 
 // Open handle to database like normal
@@ -259,11 +259,11 @@ available.
 #### Download
 
 ```shell
-go get -u -t github.com/volatiletech/sqlboiler
+go get -u -t github.com/ActiveState/sqlboiler
 
 # Also install the driver of your choice, there exists pqsl, mysql, mssql
 # These are separate binaries.
-go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql
+go get github.com/ActiveState/sqlboiler/drivers/sqlboiler-psql
 ```
 
 #### Configuration
@@ -361,7 +361,7 @@ generate models for, we can invoke the sqlboiler command line utility.
 
 ```text
 SQL Boiler generates a Go ORM from template files, tailored to your database schema.
-Complete documentation is available at http://github.com/volatiletech/sqlboiler
+Complete documentation is available at http://github.com/ActiveState/sqlboiler
 
 Usage:
   sqlboiler [flags] <driver>
@@ -960,7 +960,7 @@ safe, but be careful!
 
 ```go
 // Dot import so we can access query mods directly instead of prefixing with "qm."
-import . "github.com/volatiletech/sqlboiler/queries/qm"
+import . "github.com/ActiveState/sqlboiler/queries/qm"
 
 // Use a raw query against a generated struct (Pilot in this example)
 // If this query mod exists in your call, it will override the others.
@@ -1096,7 +1096,7 @@ in combination with your own custom, non-generated model.
 
 ### Binding
 
-For a comprehensive ruleset for `Bind()` you can refer to our [godoc](https://godoc.org/github.com/volatiletech/sqlboiler/queries#Bind).
+For a comprehensive ruleset for `Bind()` you can refer to our [godoc](https://godoc.org/github.com/ActiveState/sqlboiler/queries#Bind).
 
 The `Bind()` [Finisher](#finisher) allows the results of a query built with
 the [Raw SQL](#raw-query) method or the [Query Builder](#query-building) methods to be bound
@@ -1369,7 +1369,7 @@ tx.Rollback()
 
 It's also worth noting that there's a way to take advantage of `boil.SetDB()`
 by using the
-[boil.BeginTx()](https://godoc.org/github.com/volatiletech/sqlboiler/boil#BeginTx) 
+[boil.BeginTx()](https://godoc.org/github.com/ActiveState/sqlboiler/boil#BeginTx) 
 function. This opens a transaction using the globally stored database.
 
 ### Debug Logging
@@ -1444,7 +1444,7 @@ zero value.
 **NOTE:** CreatedAt/UpdatedAt are not included in `Whitelist` automatically.
 
 See the documentation for
-[boil.Columns.InsertColumnSet](https://godoc.org/github.com/volatiletech/sqlboiler/boil/#Columns.InsertColumnSet)
+[boil.Columns.InsertColumnSet](https://godoc.org/github.com/ActiveState/sqlboiler/boil/#Columns.InsertColumnSet)
 for more details.
 
 ```go
@@ -1496,7 +1496,7 @@ documentation above for more details.
 **NOTE:** CreatedAt/UpdatedAt are not included in `Whitelist` automatically.
 
 See the documentation for
-[boil.Columns.UpdateColumnSet](https://godoc.org/github.com/volatiletech/sqlboiler/boil/#Columns.UpdateColumnSet)
+[boil.Columns.UpdateColumnSet](https://godoc.org/github.com/ActiveState/sqlboiler/boil/#Columns.UpdateColumnSet)
 for more details.
 
 ```go
@@ -1764,8 +1764,8 @@ You *must* use a DSN flag in MySQL connections, see: [Requirements](#requirement
 
 #### Where is the homepage?
 
-The homepage for the [SQLBoiler](https://github.com/volatiletech/sqlboiler) [Golang ORM](https://github.com/volatiletech/sqlboiler)
-generator is located at: https://github.com/volatiletech/sqlboiler
+The homepage for the [SQLBoiler](https://github.com/ActiveState/sqlboiler) [Golang ORM](https://github.com/ActiveState/sqlboiler)
+generator is located at: https://github.com/ActiveState/sqlboiler
 
 ## Benchmarks
 

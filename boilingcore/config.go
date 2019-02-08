@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/spf13/cast"
-	"github.com/volatiletech/sqlboiler/drivers"
-	"github.com/volatiletech/sqlboiler/importers"
+	"github.com/ActiveState/sqlboiler/drivers"
+	"github.com/ActiveState/sqlboiler/importers"
 )
 
 // Config for the running of the commands

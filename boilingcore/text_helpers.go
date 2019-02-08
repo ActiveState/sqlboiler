@@ -3,8 +3,8 @@ package boilingcore
 import (
 	"strings"
 
-	"github.com/volatiletech/sqlboiler/drivers"
-	"github.com/volatiletech/sqlboiler/strmangle"
+	"github.com/ActiveState/sqlboiler/drivers"
+	"github.com/ActiveState/sqlboiler/strmangle"
 )
 
 // txtNameToOne creates the local and foreign function names for
