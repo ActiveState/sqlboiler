@@ -47,59 +47,63 @@ var (
 )
 
 func TestDriver(t *testing.T) {
-	out := &bytes.Buffer{}
-	createDB := exec.Command("sqlcmd", "-S", envHostname, "-U", envUsername, "-P", envPassword, "-d", envDatabase, "-b", "-i", "testdatabase.sql")
-	createDB.Stdout = out
-	createDB.Stderr = out
+	// We run this 5 times in order to try to catch cases where the output
+	// varies between runs.
+	for i := 0; i < 5; i++ {
+		out := &bytes.Buffer{}
+		createDB := exec.Command("sqlcmd", "-S", envHostname, "-U", envUsername, "-P", envPassword, "-d", envDatabase, "-b", "-i", "testdatabase.sql")
+		createDB.Stdout = out
+		createDB.Stderr = out
 
-	if err := createDB.Run(); err != nil {
-		t.Logf("mssql output:\n%s\n", out.Bytes())
-		t.Fatal(err)
-	}
-	t.Logf("mssql output:\n%s\n", out.Bytes())
-
-	config := drivers.Config{
-		"user":    envUsername,
-		"pass":    envPassword,
-		"dbname":  envDatabase,
-		"host":    envHostname,
-		"port":    envPort,
-		"sslmode": "disable",
-		"schema":  "dbo",
-	}
-
-	p := &MSSQLDriver{}
-	info, err := p.Assemble(config)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	for _, t := range info.Tables {
-		t.PKey.Name = rgxKeyIDs.ReplaceAllString(t.PKey.Name, "")
-		for i := range t.FKeys {
-			t.FKeys[i].Name = rgxKeyIDs.ReplaceAllString(t.FKeys[i].Name, "")
-		}
-	}
-
-	got, err := json.MarshalIndent(info, "", "\t")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if *flagOverwriteGolden {
-		if err = ioutil.WriteFile("mssql.golden.json", got, 0664); err != nil {
+		if err := createDB.Run(); err != nil {
+			t.Logf("mssql output:\n%s\n", out.Bytes())
 			t.Fatal(err)
 		}
-		t.Log("wrote:", string(got))
-		return
-	}
+		t.Logf("mssql output:\n%s\n", out.Bytes())
 
-	want, err := ioutil.ReadFile("mssql.golden.json")
-	if err != nil {
-		t.Fatal(err)
-	}
+		config := drivers.Config{
+			"user":    envUsername,
+			"pass":    envPassword,
+			"dbname":  envDatabase,
+			"host":    envHostname,
+			"port":    envPort,
+			"sslmode": "disable",
+			"schema":  "dbo",
+		}
 
-	if bytes.Compare(want, got) != 0 {
-		t.Errorf("want:\n%s\ngot:\n%s\n", want, got)
+		p := &MSSQLDriver{}
+		info, err := p.Assemble(config)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, t := range info.Tables {
+			t.PKey.Name = rgxKeyIDs.ReplaceAllString(t.PKey.Name, "")
+			for i := range t.FKeys {
+				t.FKeys[i].Name = rgxKeyIDs.ReplaceAllString(t.FKeys[i].Name, "")
+			}
+		}
+
+		got, err := json.MarshalIndent(info, "", "\t")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if *flagOverwriteGolden {
+			if err = ioutil.WriteFile("mssql.golden.json", got, 0664); err != nil {
+				t.Fatal(err)
+			}
+			t.Log("wrote:", string(got))
+			return
+		}
+
+		want, err := ioutil.ReadFile("mssql.golden.json")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if bytes.Compare(want, got) != 0 {
+			t.Errorf("want:\n%s\ngot:\n%s\n", want, got)
+		}
 	}
 }

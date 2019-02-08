@@ -32,59 +32,63 @@ var (
 )
 
 func TestAssemble(t *testing.T) {
-	b, err := ioutil.ReadFile("testdatabase.sql")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	out := &bytes.Buffer{}
-	createDB := exec.Command("psql", "-h", envHostname, "-U", envUsername, envDatabase)
-	createDB.Env = append([]string{fmt.Sprintf("PGPASSWORD=%s", envPassword)}, os.Environ()...)
-	createDB.Stdout = out
-	createDB.Stderr = out
-	createDB.Stdin = bytes.NewReader(b)
-
-	if err := createDB.Run(); err != nil {
-		t.Logf("psql output:\n%s\n", out.Bytes())
-		t.Fatal(err)
-	}
-	t.Logf("psql output:\n%s\n", out.Bytes())
-
-	config := drivers.Config{
-		"user":    envUsername,
-		"pass":    envPassword,
-		"dbname":  envDatabase,
-		"host":    envHostname,
-		"port":    envPort,
-		"sslmode": "disable",
-		"schema":  "public",
-	}
-
-	p := &PostgresDriver{}
-	info, err := p.Assemble(config)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	got, err := json.MarshalIndent(info, "", "\t")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if *flagOverwriteGolden {
-		if err = ioutil.WriteFile("psql.golden.json", got, 0664); err != nil {
+	// We run this 5 times in order to try to catch cases where the output
+	// varies between runs.
+	for i := 0; i < 5; i++ {
+		b, err := ioutil.ReadFile("testdatabase.sql")
+		if err != nil {
 			t.Fatal(err)
 		}
-		t.Log("wrote:", string(got))
-		return
-	}
 
-	want, err := ioutil.ReadFile("psql.golden.json")
-	if err != nil {
-		t.Fatal(err)
-	}
+		out := &bytes.Buffer{}
+		createDB := exec.Command("psql", "-h", envHostname, "-U", envUsername, envDatabase)
+		createDB.Env = append([]string{fmt.Sprintf("PGPASSWORD=%s", envPassword)}, os.Environ()...)
+		createDB.Stdout = out
+		createDB.Stderr = out
+		createDB.Stdin = bytes.NewReader(b)
 
-	if bytes.Compare(want, got) != 0 {
-		t.Errorf("want:\n%s\ngot:\n%s\n", want, got)
+		if err := createDB.Run(); err != nil {
+			t.Logf("psql output:\n%s\n", out.Bytes())
+			t.Fatal(err)
+		}
+		t.Logf("psql output:\n%s\n", out.Bytes())
+
+		config := drivers.Config{
+			"user":    envUsername,
+			"pass":    envPassword,
+			"dbname":  envDatabase,
+			"host":    envHostname,
+			"port":    envPort,
+			"sslmode": "disable",
+			"schema":  "public",
+		}
+
+		p := &PostgresDriver{}
+		info, err := p.Assemble(config)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		got, err := json.MarshalIndent(info, "", "\t")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if *flagOverwriteGolden {
+			if err = ioutil.WriteFile("psql.golden.json", got, 0664); err != nil {
+				t.Fatal(err)
+			}
+			t.Log("wrote:", string(got))
+			return
+		}
+
+		want, err := ioutil.ReadFile("psql.golden.json")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if bytes.Compare(want, got) != 0 {
+			t.Errorf("want:\n%s\ngot:\n%s\n", want, got)
+		}
 	}
 }
