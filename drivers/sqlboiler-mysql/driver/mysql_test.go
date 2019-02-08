@@ -32,58 +32,62 @@ var (
 )
 
 func TestDriver(t *testing.T) {
-	b, err := ioutil.ReadFile("testdatabase.sql")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	out := &bytes.Buffer{}
-	createDB := exec.Command("mysql", "-h", envHostname, "-u", envUsername, fmt.Sprintf("-p%s", envPassword), envDatabase)
-	createDB.Stdout = out
-	createDB.Stderr = out
-	createDB.Stdin = bytes.NewReader(b)
-
-	if err := createDB.Run(); err != nil {
-		t.Logf("mysql output:\n%s\n", out.Bytes())
-		t.Fatal(err)
-	}
-	t.Logf("mysql output:\n%s\n", out.Bytes())
-
-	config := drivers.Config{
-		"user":    envUsername,
-		"pass":    envPassword,
-		"dbname":  envDatabase,
-		"host":    envHostname,
-		"port":    3306,
-		"sslmode": "false",
-		"schema":  envDatabase,
-	}
-
-	p := &MySQLDriver{}
-	info, err := p.Assemble(config)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	got, err := json.Marshal(info)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if *flagOverwriteGolden {
-		if err = ioutil.WriteFile("mysql.golden.json", got, 0664); err != nil {
+	// We run this 5 times in order to try to catch cases where the output
+	// varies between runs.
+	for i := 0; i < 5; i++ {
+		b, err := ioutil.ReadFile("testdatabase.sql")
+		if err != nil {
 			t.Fatal(err)
 		}
-		t.Log("wrote:", string(got))
-		return
-	}
 
-	want, err := ioutil.ReadFile("mysql.golden.json")
-	if err != nil {
-		t.Fatal(err)
-	}
+		out := &bytes.Buffer{}
+		createDB := exec.Command("mysql", "-h", envHostname, "-u", envUsername, fmt.Sprintf("-p%s", envPassword), envDatabase)
+		createDB.Stdout = out
+		createDB.Stderr = out
+		createDB.Stdin = bytes.NewReader(b)
 
-	if bytes.Compare(want, got) != 0 {
-		t.Errorf("want:\n%s\ngot:\n%s\n", want, got)
+		if err := createDB.Run(); err != nil {
+			t.Logf("mysql output:\n%s\n", out.Bytes())
+			t.Fatal(err)
+		}
+		t.Logf("mysql output:\n%s\n", out.Bytes())
+
+		config := drivers.Config{
+			"user":    envUsername,
+			"pass":    envPassword,
+			"dbname":  envDatabase,
+			"host":    envHostname,
+			"port":    3306,
+			"sslmode": "false",
+			"schema":  envDatabase,
+		}
+
+		p := &MySQLDriver{}
+		info, err := p.Assemble(config)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		got, err := json.MarshalIndent(info, "", "\t")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if *flagOverwriteGolden {
+			if err = ioutil.WriteFile("mysql.golden.json", got, 0664); err != nil {
+				t.Fatal(err)
+			}
+			t.Log("wrote:", string(got))
+			return
+		}
+
+		want, err := ioutil.ReadFile("mysql.golden.json")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if bytes.Compare(want, got) != 0 {
+			t.Errorf("want:\n%s\ngot:\n%s\n", want, got)
+		}
 	}
 }
