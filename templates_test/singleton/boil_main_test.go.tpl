@@ -1,8 +1,6 @@
 var flagDebugMode = flag.Bool("test.sqldebug", false, "Turns on debug mode for SQL statements")
 var flagConfigFile = flag.String("test.config", "", "Overrides the default config")
 
-const outputDirDepth = {{.OutputDirDepth}}
-
 var (
 	dbMain tester
 )
@@ -66,20 +64,12 @@ func initViper() error {
 		return nil
 	}
 
- 	var err error
-
 	viper.SetConfigName("sqlboiler")
 
 	configHome := os.Getenv("XDG_CONFIG_HOME")
 	homePath := os.Getenv("HOME")
-	wd, err := os.Getwd()
-	if err != nil {
-		wd = strings.Repeat("../", outputDirDepth)
-	} else {
-		wd = wd + strings.Repeat("/..", outputDirDepth)
-	}
 
-	configPaths := []string{wd}
+	configPaths := []string{"/"}
 	if len(configHome) > 0 {
 		configPaths = append(configPaths, filepath.Join(configHome, "sqlboiler"))
 	} else {
